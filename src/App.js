@@ -5,18 +5,25 @@ import "./style.css";
 
 function App() {
   const [count, setCount] = useState(0);
-  const [quote,setQuote] = useState([])
+  const [quote,setQuote] = useState('')
 
-  function inc(e) { 
+  function inc() { 
     console.log(count)
-    e.preventDefault();    
+         
     setCount(count + 1);
-    if(count==4)
+     if(count == 4 || count == 9)
     {
-       let quote = myapi()
+      myapi()
+    }  
+    if(count<10)
+    {
+      setCount(count+1)
+      setQuote('')
       
     }
+    
   }
+    
 
   function dec() {
      
@@ -29,8 +36,10 @@ function App() {
   function myapi(){
     axios.get(api)
     .then((res)=>{
-      console.log(res)
+      
+      setQuote(res.data[0].content) 
     })
+   
   }
 
   return (
@@ -40,22 +49,15 @@ function App() {
         Increment
       </button>
       { (count==0)?
-      <button className="decrement" disabled  onClick={dec}>
-
-        
+      <button className="decrement" disabled  onClick={inc}>        
         Decrement
-      </button>:<button className="decrement"  onClick={dec}>
-
-        
+      </button>:<button className="decrement"  onClick={dec}>       
 Decrement
-</button>}
+</button>
 
-          <div>
-
-               
-
-             {/* <div className="quote">Random Quote: {quote}</div> */}
-          </div>
+}
+<div className="quote">Random Quote: {quote}  </div>
+          
 
   </div>
 
@@ -64,4 +66,4 @@ Decrement
   );
 }
 
-export default App;
+export default App
