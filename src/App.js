@@ -10,17 +10,20 @@ function App() {
   function inc() { 
     console.log(count)
          
-    setCount(count + 1);
+    
      if(count == 4 || count == 9)
     {
+      
       myapi()
     }  
-    if(count<10)
-    {
-      setCount(count+1)
-      setQuote('')
-      
-    }
+   if(count < 10)
+   {
+    setCount(count + 1);
+
+    
+    setQuote(" ")
+    
+   }
     
   }
     
@@ -28,6 +31,16 @@ function App() {
   function dec() {
      
      setCount(count > 0 ? count - 1 : 0)
+     if(count == 4 || count == 9)
+     {
+       myapi()
+     }  
+    if(count < 10)
+    {
+     setQuote(" ")
+     
+    }
+     
   }
 
   let api =  "https://api.quotable.io/quotes/random"
@@ -38,8 +51,9 @@ function App() {
     .then((res)=>{
       
       setQuote(res.data[0].content) 
+      
     })
-   
+   console.log(quote)
   }
 
   return (
