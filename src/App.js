@@ -1,61 +1,36 @@
 import axios from "axios";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./style.css";
 
 function App() {
-  const [count, setCount] = useState(0);
-  const [quote,setQuote] = useState('')
 
-  function inc() { 
-    console.log(count)
-         
-    
-     if(count == 4 || count == 9)
+  const [count,setCount] = useState(0)
+  const [quote,setQuote] = useState("")
+  useEffect(()=>{
+    if(count == 5 || count == 10)
+    axios.get("https://api.quotable.io/quotes/random")
+    .then((res)=>
     {
-      
-      myapi()
-    }  
-   if(count < 10)
-   {
-    setCount(count + 1);
-
-    
-    setQuote(" ")
-    
-   }
-    
-  }
-    
-
-  function dec() {
-     
-     setCount(count > 0 ? count - 1 : 0)
-     if(count == 4 || count == 9)
-     {
-       myapi()
-     }  
-    if(count < 10)
-    {
-     setQuote(" ")
-     
-    }
-     
-  }
-
-  let api =  "https://api.quotable.io/quotes/random"
-
-
-  function myapi(){
-    axios.get(api)
-    .then((res)=>{
-      
-      setQuote(res.data[0].content) 
-      
+      console.log(res.data)
+      setQuote(res.data[0].content)
     })
-   console.log(quote)
-  }
+    else{
+      setQuote("")
+    }
 
+    
+  },[count])
+
+function inc()
+{
+  
+  setCount(count + 1)
+}
+function dec(){
+  setCount(count <= 0 ? 0 : count -1)
+}
+  
   return (
     <div className="counter-widget">
       <div className="count">{count}</div>
@@ -70,12 +45,10 @@ Decrement
 </button>
 
 }
-<div className="quote">Random Quote: {quote}  </div>
+<div className="quote">  {`${quote}  Random quote : No quote available`}   </div>
           
 
-  </div>
-
-        
+  </div>        
 
   );
 }
